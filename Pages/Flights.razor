@@ -1,0 +1,252 @@
+﻿@page "/flights"
+@using Traveless.Data
+
+<style>
+    .row {
+        display: flex;
+        justify-content: center;
+    }
+
+    .row1{
+        display: flexbox;
+        border: solid 1px black;
+        margin-top: 30px;
+    }
+    /* Create two equal columns that sit next to each other */
+    .column1, .column2 {
+        flex: 50%;
+        padding-bottom: 40px;
+        border: solid 1px black;
+    }
+
+    button{
+        margin-left: 50%;
+    }
+
+    h3 {
+        margin-left: 50%;
+    }
+
+    ol{
+        list-style-type: none;
+    }
+
+    ul {
+        list-style-type: none;
+        text-align: right;
+    }
+
+    /*button styling and alignment need to be fixed!*/
+
+    select{
+        width: 500px;
+    }
+
+</style>
+
+<!--New Front End-->
+<h3>Flight Finder</h3>
+
+<div>
+    <div>
+        <label>From:</label>
+        <select>
+            <option>Any</option>
+            @foreach(var flight in flights)
+            {
+                <option value="@flight.From">@flight.From</option>
+            }
+        </select>
+    </div>
+    <div>
+        <label>To:</label>
+        <select>
+            <option>Any</option>
+            @foreach (var flight in flights)
+            {
+                <option value="@flight.To">@flight.To</option>
+            }
+        </select>
+    </div>
+    <div>
+        <label>Day:</label>
+        <select>
+            <option>Any</option>
+            @foreach (var flight in flights)
+            {
+                    <option value="@flight.Day">@flight.Day</option>
+            }        
+        </select>
+    </div>
+    <button>Find flights</button>
+
+</div>
+
+
+
+<h3>Flights</h3>
+
+<div>
+    <div>
+        <select>
+            <option>Loading...</option>
+            @foreach (var flight in flights)
+            {
+                <option value="@flight.FlightCode">@flight.FlightCode, @flight.Airline, @flight.From, @flight.To, @flight.Day, @flight.Time, @flight.Cost</option>
+            }
+        </select>
+    </div>
+</div>
+
+
+
+<!--Old Front End -->
+<div class="row">
+    <div class="column1">
+        <h3>Flights</h3>
+        <ol>
+            <li>Flight 1</li>
+            <li>Flight 2</li>
+        </ol>
+    </div>
+    <div class="column2">
+        <h3>Reserve</h3>
+        <form>
+            <ul>
+                <li>
+                    <label for="flight">Flight:</label>
+                    <input type="text" id="flight" name="flight" size="30" value="">
+                </li>
+                <li>
+                    <label for="airline">Airline:</label>
+                    <input type="text" id="airline" name="airline" size="30" value="">
+                </li>
+                <li>
+                    <label for="day">Day:</label>
+                    <input type="text" id="day" name="day" size="30" value="">
+                </li>
+                <li>
+                    <label for="time">Time:</label>
+                    <input type="text" id="time" name="time" size="30" value="">
+                </li>
+                <li>
+                    <label for="cost">Cost:</label>
+                    <input type="text" id="cost" name="cost" size="30" value="">
+                </li>
+                <li>
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" size="30" value="">
+                </li>
+                <li>
+                    <label for="citizenship">Citizenship:</label>
+                    <input type="text" id="citizenship" name="citizenship" size="30" value="">
+                </li>
+            </ul>
+            <button>Reserve</button>
+        </form>
+    </div>
+</div>
+
+<!-- put this into a flex box as well? -->
+<!-- must load airports from provided file to populate drop down list below-->
+<div class="row1">
+    <h3>Flight Finder</h3>
+    <div class="flight-finder">
+        <form action="/action_page.php">
+            <label for="from">From:</label>
+            <select id="from" name="from">
+                <option value="city1">YYC</option>
+                <option value="city2">YVR</option>
+                <option value="city3">YTZ</option>
+                <option value="city4">YQB</option>
+                <option value="city5">YWG</option>
+                <option value="city6">YSJ</option>
+                <option value="city7">YOW</option>
+                <option value="city8">YEG</option>
+            </select>
+            <!-- <input type="submit"> -->
+        </form>
+        <form action="/action_page.php">
+            <label for="to">To:</label>
+            <select id="to" name="to">
+                <option value="city1">YYC</option>
+                <option value="city2">YVR</option>
+                <option value="city3">YTZ</option>
+                <option value="city4">YQB</option>
+                <option value="city5">YWG</option>
+                <option value="city6">YSJ</option>
+                <option value="city7">YOW</option>
+                <option value="city8">YEG</option>
+            </select>
+            <!-- <input type="submit"> -->
+        </form>
+        <form action="/action_page.php">
+            <label for="day">Day:</label>
+            <select id="day" name="day">
+                <option value="day">Any</option>
+                <option value="day1">Sunday</option>
+                <option value="day2">Monday</option>
+                <option value="day3">Tuesday</option>
+                <option value="day4">Wednesday</option>
+                <option value="day5">Thursday</option>
+                <option value="day6">Friday</option>
+                <option value="day7">Saturday</option>
+            </select>
+            <!-- <input type="submit"> -->
+            <br/>
+            <button <!--@onclick="FindFlights"-->>Find flights</button>
+        </form>
+    </div>
+</div>
+
+
+
+@code {
+    FlightManager fm = new FlightManager();
+    List<Flight> flights = FlightManager.GetFlights();
+
+    string selectedFlightCode;
+    string selectedFrom;
+    string selectedTo;
+    string selectedDay;
+
+
+    private void ShowFlightCode(ChangeEventArgs c)
+    {
+        selectedFlightCode = c.Value.ToString();
+    }
+
+    private void ShowFrom(ChangeEventArgs f)
+    {
+        selectedFrom = f.Value.ToString();
+    }
+
+    private void ShowTo(ChangeEventArgs t)
+    {
+        selectedTo = t.Value.ToString();
+    }
+
+    private void ShowDay(ChangeEventArgs d)
+    {
+        selectedDay = d.Value.ToString();
+    }
+
+
+
+    private void FindFlights(string from, string to, string day)
+    {
+        //ASK ALI HOW TO DO THIS?!
+        foreach(Flight flight in flights)
+        {
+            /*
+            if (flight.From == from && flight.To == to && flight.Day == day)
+            {
+                return flight;
+            }
+            */
+        }
+    }
+
+    //private void FlightFilter
+
+}

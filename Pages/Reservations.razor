@@ -1,0 +1,124 @@
+﻿@page "/reservations"
+
+<style>
+    .row {
+        display: flex;
+        justify-content: center;
+    }
+
+    .row1 {
+        display: flex;
+        justify-content: center;
+        border: solid 1px black;
+        margin-top: 30px;
+    }
+
+    /* Create two equal columns that sit next to each other */
+    .column1, .column2 {
+        flex: 50%;
+        border: solid 1px black;
+    }
+
+    h3 {
+        margin-left: 50%;
+    }
+
+    ol {
+        list-style-type: none;
+    }
+
+    ul {
+        list-style-type: none;
+        text-align: right;
+    }
+
+    button {
+        margin-left: 50%;
+    }
+
+    select {
+        width: 282px;
+    }
+
+    form {
+        justify-content: right;
+    }
+
+</style>
+
+<div class="row">
+    <div class="column1">
+        <h3>Reservations</h3>
+        <ol>
+            <li>Flight 1</li>
+            <li>Flight 2</li>
+        </ol>
+    </div>
+    <div class="column2">
+        <h3>Reserve</h3>
+        <form>
+            <ul>
+                <li>
+                    <label for="code">Code:</label>
+                    <input type="text" id="code" name="code" size="30" value="">
+                </li>
+                <li>
+                    <label for="flight">Flight:</label>
+                    <input type="text" id="flight" name="flight" size="30" value="">
+                </li>
+                <li>
+                    <label for="airline">Airline:</label>
+                    <input type="text" id="airline" name="airline" size="30" value="">
+                </li>
+                <li>
+                    <label for="cost">Cost:</label>
+                    <input type="text" id="cost" name="cost" size="30" value="">
+                </li>
+                <li>
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" size="30" value="">
+                </li>
+                <li>
+                    <label for="citizenship">Citizenship:</label>
+                    <input type="text" id="citizenship" name="citizenship" size="30" value="">
+                </li>
+                <li>
+                    <label for="status">Status:</label>
+                    <select id="status" name="status">
+                        <option value="status1">Active</option>
+                        <option value="status2">Inactive</option>
+                    </select>
+                </li>
+            </ul>
+            <button>Reserve</button>
+        </form>
+    </div>
+</div>
+
+<div class="row1">
+    <div class="column3">
+        <h3>Search</h3>
+        <form>
+            <ul>
+                <li>
+                    <label for="code">Code:</label>
+                    <input type="text" id="code" name="code" size="60" value="">
+                </li>
+                <li>
+                    <label for="airline">Airline:</label>
+                    <input type="text" id="airline" name="airline" size="60" value="">
+                </li>
+                <li>
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" size="60" value="">
+                </li>
+            </ul>
+        </form>
+        <button>Find reservation</button>
+    </div>
+</div>
+
+
+@code {
+
+}
