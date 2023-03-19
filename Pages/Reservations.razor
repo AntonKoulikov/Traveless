@@ -1,122 +1,136 @@
 ﻿@page "/reservations"
+@using Traveless.Data
 
-<style>
-    .row {
-        display: flex;
-        justify-content: center;
-    }
+<!--New Front End-->
+<head>
+    <style>
 
-    .row1 {
-        display: flex;
-        justify-content: center;
-        border: solid 1px black;
-        margin-top: 30px;
-    }
+        h3 {
+            text-align: center;
+            margin-top: 16px;
+        }
 
-    /* Create two equal columns that sit next to each other */
-    .column1, .column2 {
-        flex: 50%;
-        border: solid 1px black;
-    }
+        select {
+            width: 100%;
+            padding: 8px 8px;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
 
-    h3 {
-        margin-left: 50%;
-    }
+        input[type=text] {
+            width: 100%;
+            padding: 6px 8px;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
 
-    ol {
-        list-style-type: none;
-    }
+        button {
+            width: 100%;
+            background-color: dodgerblue;
+            color: white;
+            padding: 6px 0px;
+            margin: 24px 0px;
+            border: none;
+            border-radius: 4px;
+        }
 
-    ul {
-        list-style-type: none;
-        text-align: right;
-    }
+        button:hover {
+            background-color: #389dff;
+        }
 
-    button {
-        margin-left: 50%;
-    }
+        .row {
+            display: flex;
+            flex-direction: row;
+        }
 
-    select {
-        width: 282px;
-    }
+        .row > div {
+            width: 25%;
+        }
 
-    form {
-        justify-content: right;
-    }
+        .row1 {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+        }
 
-</style>
+    </style>
+</head>
 
-<div class="row">
-    <div class="column1">
-        <h3>Reservations</h3>
-        <ol>
-            <li>Flight 1</li>
-            <li>Flight 2</li>
-        </ol>
+<body>
+
+    <h3>Reservation Finder</h3>
+
+    <div class="row">
+        <div class="c">
+            <label>Reservation code:</label><br>
+            <input type="text" id="reservationCode" name="reservationCode" placeholder="LDDD"><br>
+        </div>
+        <div class="c1">
+            <label>Airline:</label><br>
+            <input type="text" id="airline" name="airline" placeholder="Airline"><br>
+        </div>
+        <div class="c2">
+            <label>Name:</label><br>
+            <input type="text" id="name" name="name" placeholder="Name"><br>
+        </div>
+        <div class="c3">
+            <button>Find reservations</button>
+        </div>
     </div>
-    <div class="column2">
-        <h3>Reserve</h3>
-        <form>
-            <ul>
-                <li>
-                    <label for="code">Code:</label>
-                    <input type="text" id="code" name="code" size="30" value="">
-                </li>
-                <li>
-                    <label for="flight">Flight:</label>
-                    <input type="text" id="flight" name="flight" size="30" value="">
-                </li>
-                <li>
-                    <label for="airline">Airline:</label>
-                    <input type="text" id="airline" name="airline" size="30" value="">
-                </li>
-                <li>
-                    <label for="cost">Cost:</label>
-                    <input type="text" id="cost" name="cost" size="30" value="">
-                </li>
-                <li>
-                    <label for="name">Name:</label>
-                    <input type="text" id="name" name="name" size="30" value="">
-                </li>
-                <li>
-                    <label for="citizenship">Citizenship:</label>
-                    <input type="text" id="citizenship" name="citizenship" size="30" value="">
-                </li>
-                <li>
-                    <label for="status">Status:</label>
-                    <select id="status" name="status">
-                        <option value="status1">Active</option>
-                        <option value="status2">Inactive</option>
-                    </select>
-                </li>
-            </ul>
-            <button>Reserve</button>
-        </form>
-    </div>
-</div>
 
-<div class="row1">
-    <div class="column3">
-        <h3>Search</h3>
-        <form>
-            <ul>
-                <li>
-                    <label for="code">Code:</label>
-                    <input type="text" id="code" name="code" size="60" value="">
-                </li>
-                <li>
-                    <label for="airline">Airline:</label>
-                    <input type="text" id="airline" name="airline" size="60" value="">
-                </li>
-                <li>
-                    <label for="name">Name:</label>
-                    <input type="text" id="name" name="name" size="60" value="">
-                </li>
-            </ul>
-        </form>
-        <button>Find reservation</button>
+    <h3>Reservations</h3>
+
+    <div class="row1">
+        <select>
+            <option>Loading...</option>
+            <!-- @foreach (var flight in flights)
+            {
+                <option value="@flight.FlightCode">@flight.FlightCode, @flight.Airline, @flight.From, @flight.To, @flight.Day, @flight.Time, @flight.Seats, @flight.Cost</option>
+            } -->
+        </select>
     </div>
-</div>
+
+    <h3>Reserve</h3>
+
+    <div class="row2">
+        <div>
+            <label>Reservation code:</label><br>
+            <input type="text" id="reservationCode" name="reservationCode" placeholder="LDDD"><br>
+        </div>
+        <div>
+            <label>Flight code:</label><br>
+            <input type="text" id="flightCode" name="flightCode" placeholder="LL-DDDD"><br>
+        </div>
+        <div>
+            <label>Airline:</label><br>
+            <input type="text" id="airline" name="airline" placeholder="Airline"><br>
+        </div>
+        <div>
+            <label>Cost:</label><br>
+            <input type="text" id="cost" name="cost" placeholder="0"><br>
+        </div>
+        <div>
+            <label>Name:</label><br>
+            <input type="text" id="name" name="name" placeholder="Name"><br> <!--Appears to not be a placeholder?-->
+        </div>
+        <div>
+            <label>Citizenship:</label><br>
+            <input type="text" id="citizenship" name="citizenship" placeholder="Citizenship"><br>
+        </div>
+        <div>
+            <label>Status:</label><br>
+            <input type="text" id="status" name="status" placeholder="Active"><br> <!--Appears to not be a placeholder?-->
+        </div>
+        <div>
+            <button>Save</button>
+        </div>
+    </div>
+
+</body>
 
 
 @code {
