@@ -8,7 +8,7 @@ namespace Traveless.Data
 {
     internal class FlightManager
     {
-        public FlightManager() 
+        public FlightManager() //Whenever FlightManager is called, it will load list of flights from flights.csv
         {
             LoadListOfFlightsFromFile();
         }
@@ -42,11 +42,13 @@ namespace Traveless.Data
             }
         }
 
-        public static List<Flight> GetFlights()
+        public static List<Flight> GetFlights() //Returns list of flights
         {
             return listOfFlights;
         }
 
+
+        //Code from thursday class
         public static List<Flight> FindFlights(string from, string to, string day)
         {
 
@@ -56,11 +58,8 @@ namespace Traveless.Data
             {
                 if (flight.From == "YYC" & flight.To == "YEG" & flight.Day == "Any")
                 {
-
                     found.Add(flight);
-
                 }
-
             }
             return found;
         }
