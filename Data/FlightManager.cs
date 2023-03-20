@@ -8,7 +8,7 @@ namespace Traveless.Data
 {
     internal class FlightManager
     {
-        public FlightManager() 
+        public FlightManager() //Whenever FlightManager is called, it will load list of flights from flights.csv
         {
             LoadListOfFlightsFromFile();
         }
@@ -42,28 +42,11 @@ namespace Traveless.Data
             }
         }
 
-        public static List<Flight> GetFlights()
+        public static List<Flight> GetFlights() //Returns list of flights
         {
             return listOfFlights;
         }
 
-        public static List<Flight> FindFlights(string from, string to, string day)
-        {
-
-            List<Flight> found = new List<Flight>();
-
-            foreach (Flight flight in listOfFlights)
-            {
-                if (flight.From == "YYC" & flight.To == "YEG" & flight.Day == "Any")
-                {
-
-                    found.Add(flight);
-
-                }
-
-            }
-            return found;
-        }
 
         //ASK ALI HOW TO DO THIS?!
         //foreach(Flight flight in flights) //Fill the flights list when button is pressed //Filter from the list in the backend, and refill the list, when button pressed
