@@ -67,30 +67,30 @@
     <div class="row">
         <div class="c">
             <label>Reservation code:</label><br>
-            <input type="text" id="reservationCode" name="reservationCode" placeholder="LDDD"><br>
+            <input type="text" id="reservationCode" name="reservationCode" placeholder="LDDD" value="@selectedReservationCode"><br>
         </div>
         <div class="c1">
             <label>Airline:</label><br>
-            <input type="text" id="airline" name="airline" placeholder="Airline"><br>
+            <input type="text" id="airline" name="airline" placeholder="Airline" value="@selectedAirline"><br>
         </div>
         <div class="c2">
             <label>Name:</label><br>
-            <input type="text" id="name" name="name" placeholder="Name"><br>
+            <input type="text" id="name" name="name" placeholder="Name"value="@selectedName"><br>
         </div>
         <div class="c3">
-            <button>Find reservations</button>
+            <button @onclick="FindReservations">Find reservations</button> <!--ToDo addonclick to load reservations list-->
         </div>
     </div>
 
     <h3>Reservations</h3>
 
     <div class="row1">
-        <select>
-            <option>Loading...</option>
-            <!-- @foreach (var flight in flights)
+        <select @onchange="FillReservationsForm">
+            <option>@loadingMessage</option>
+            @foreach (Reservation reservation in foundReservations) //foundFlights converts all found flights ToString while providing them as options in the drop down menu
             {
-                <option value="@flight.FlightCode">@flight.FlightCode, @flight.Airline, @flight.From, @flight.To, @flight.Day, @flight.Time, @flight.Seats, @flight.Cost</option>
-            } -->
+                <option value="@reservation.ToString()">@reservation.ToString()</option>
+            }
         </select>
     </div>
 
@@ -99,31 +99,31 @@
     <div class="row2">
         <div>
             <label>Reservation code:</label><br>
-            <input type="text" id="reservationCode" name="reservationCode" placeholder="LDDD"><br>
+            <input type="text" id="reservationCode" name="reservationCode" placeholder="LDDD" value="@selectedReservationCode"><br>
         </div>
         <div>
             <label>Flight code:</label><br>
-            <input type="text" id="flightCode" name="flightCode" placeholder="LL-DDDD"><br>
+            <input type="text" id="flightCode" name="flightCode" placeholder="LL-DDDD" value="@selectedFlightCode" readonly><br>
         </div>
         <div>
             <label>Airline:</label><br>
-            <input type="text" id="airline" name="airline" placeholder="Airline"><br>
+            <input type="text" id="airline" name="airline" placeholder="Airline" value="@selectedAirline" readonly><br>
         </div>
         <div>
             <label>Cost:</label><br>
-            <input type="text" id="cost" name="cost" placeholder="0"><br>
+            <input type="text" id="cost" name="cost" placeholder="0" value="@selectedCost" readonly><br>
         </div>
         <div>
             <label>Name:</label><br>
-            <input type="text" id="name" name="name" placeholder="Name"><br> <!--Appears to not be a placeholder?-->
+            <input type="text" id="name" name="name" placeholder="Name" value="@selectedName" @onchange="FillName">><br> <!--Appears to not be a placeholder?-->
         </div>
         <div>
             <label>Citizenship:</label><br>
-            <input type="text" id="citizenship" name="citizenship" placeholder="Citizenship"><br>
+            <input type="text" id="citizenship" name="citizenship" placeholder="Citizenship" value="@selectedCitizenship" @onchange="FillCitizenship"><br>
         </div>
         <div>
             <label>Status:</label><br>
-            <input type="text" id="status" name="status" placeholder="Active"><br> <!--Appears to not be a placeholder?-->
+            <input type="text" id="status" name="status" placeholder="Active" value="@selectedStatus" @onchange="FillStatus"><br> <!--Appears to not be a placeholder?-->
         </div>
         <div>
             <button>Save</button>
@@ -134,5 +134,112 @@
 
 
 @code {
+
+    //FlightManager flightManager = new FlightManager();
+    //List<Flight> listOfFlightsB = FlightManager.GetFlights();
+
+    List<Reservation> listOfReservationsB = ReservationManager.GetReservations();
+
+    public string loadingMessage = "Loading..."; //loading message for reservations list dropdown
+
+    string selectedReservationCode;
+    string selectedAirline;
+    string selectedName;
+    string selectedFlightCode;
+    string selectedCost;
+    string selectedCitizenship;
+    string selectedStatus;
+
+    private void FillReservationCode(ChangeEventArgs e)
+    {
+        selectedReservationCode = e.Value.ToString();
+    }
+
+    private void FillAirline(ChangeEventArgs e)
+    {
+        selectedAirline = e.Value.ToString();
+    }
+
+    private void FillName(ChangeEventArgs e)
+    {
+        selectedName = e.Value.ToString();
+    }
+
+    private void FillFlightCode(ChangeEventArgs e)
+    {
+        selectedFlightCode = e.Value.ToString();
+    }
+
+    private void FillCost(ChangeEventArgs e)
+    {
+        selectedCost = e.Value.ToString();
+    }
+
+    private void FillCitizenship(ChangeEventArgs e)
+    {
+        selectedCitizenship = e.Value.ToString();
+    }
+
+    private void FillStatus(ChangeEventArgs e)
+    {
+        selectedStatus = e.Value.ToString();
+    }
+
+    public void FillReservationsForm(ChangeEventArgs e)
+    {
+        //FlightManager flightManager = new FlightManager(); //Not need here //Will populate flights list when called
+
+        //Need a populated resevation list first!!!
+
+        string selectedReservation = e.Value.ToString();
+        string[] reservationField = selectedReservation.Split(", ");
+
+        selectedReservationCode = reservationField[0];
+        selectedFlightCode = reservationField[1];
+        selectedAirline = reservationField[2];
+        selectedCost = reservationField[3];
+        selectedName = reservationField[4];
+        selectedCitizenship = reservationField[5];
+        selectedStatus = reservationField[6];
+
+        //Add reservation stuff here?
+    }
+
+    //List<Reservation> listOfReservations = ReservationManager.GetReservations(); Both important for loading the listOfReservations
+    //ReservationManager reservationManager = new ReservationManager();
+
+    List<Reservation> foundReservations = new List<Reservation>();
+
+    public void FindReservations() //Throw exception here
+    {
+        //ReservationManager reservationManager = new ReservationManager();
+
+        loadingMessage = "Select a reservation from the list";
+
+        foundReservations.Clear();
+
+
+        //string reservationCode = selectedReservationCode;
+        //string flightCode = selectedFlightCode;
+        //string name = selectedName;
+
+        //string airline = selectedAirline;
+        //string cost = selectedCost;
+
+        //string citizenship = selectedCitizenship;
+        //string status = "Active";
+
+        foreach (Reservation reservation in listOfReservationsB)
+        {
+            if (selectedReservationCode == reservation.ReservationCode && selectedAirline == reservation.Airline && selectedName == reservation.Name)
+            {
+                foundReservations.Add(reservation);
+            }
+        }
+    }
+
+
+
+
 
 }

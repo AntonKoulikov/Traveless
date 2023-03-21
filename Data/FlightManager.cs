@@ -8,15 +8,15 @@ namespace Traveless.Data
 {
     internal class FlightManager
     {
+        private const string flightsFile = @"C:\Users\Anton\source\repos\Traveless\Resources\Files\flights.csv";
+
+        public static List<Flight> listOfFlights = new List<Flight>();
+
         public FlightManager() //Whenever FlightManager is called, it will load list of flights from flights.csv
         {
             LoadListOfFlightsFromFile();
         }
 
-        private const string flightsFile = @"C:\Users\Anton\source\repos\Traveless\Resources\Files\flights.csv";
-
-        public static List<Flight> listOfFlights = new List<Flight>();
-        
         //Load list of flights from flights.csv
         public void LoadListOfFlightsFromFile() 
         {

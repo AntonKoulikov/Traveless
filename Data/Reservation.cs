@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Traveless.Data
 {
-    internal class Reservations
+    internal class Reservation
     {
         public string ReservationCode { get; set; }
         public string FlightCode { get; set; }
@@ -17,11 +16,12 @@ namespace Traveless.Data
         public string Citizenship { get; set; }
         public string Status { get; set; }
 
-        public Reservations() { }
 
-        //Add to list constructor 
 
-        public Reservations(string reservationCode, string flightCode, string airline, string cost, string name, string citizenship, string status)
+        public Reservation() { }
+
+        //Add to list constructor
+        public Reservation(string reservationCode, string flightCode, string airline, string cost, string name, string citizenship, string status)
         {
             ReservationCode = reservationCode;
             FlightCode = flightCode;
@@ -33,7 +33,7 @@ namespace Traveless.Data
         }
         public override string ToString()
         {
-            return $"{ReservationCode}, {FlightCode}, {Airline}, ${Cost}, {Name}, {Citizenship}, {Status}";
+            return $"{ReservationCode}, {FlightCode}, {Airline}, {Cost}, {Name}, {Citizenship}, {Status}";
         }
 
 
