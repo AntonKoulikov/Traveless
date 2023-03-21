@@ -145,14 +145,14 @@
         </div>
         <div>
             <label>Name:</label><br>
-            <input type="text" id="name" name="name" placeholder="Name" value="@selectedName"><br>
+            <input type="text" id="name" name="name" placeholder="Name" value="@selectedName" @onchange="FillName"><br>
         </div>
         <div>
             <label>Citizenship:</label><br>
-            <input type="text" id="citizenship" name="citizenship" placeholder="Citizenship" value="@selectedCitizenship"><br>
+            <input type="text" id="citizenship" name="citizenship" placeholder="Citizenship" value="@selectedCitizenship" @onchange="FillCitizenship"><br>
         </div>
         <div>
-            <button @onclick="FillReservationCode">Reserve</button>
+            <button @onclick="Reserve">Reserve</button>
         </div>
         <div>
             <p>Reservation Code: @reservationCode</p>
@@ -168,6 +168,7 @@
     //List of all weekdays
     List<string> weekdays = new List<string>() { "Any", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
 
+    //FlightManager flightManager = new FlightManager();
     List<Flight> listOfFlightsB = FlightManager.GetFlights();
 
     public string loadingMessage = "Loading..."; //loading message for flight list dropdown
@@ -225,6 +226,16 @@
         selectedCost = e.Value.ToString();
     }
 
+    private void FillName(ChangeEventArgs e)
+    {
+        selectedName = e.Value.ToString();
+    }
+
+    private void FillCitizenship(ChangeEventArgs e)
+    {
+        selectedCitizenship = e.Value.ToString();
+    }
+
     //Function to fill the form
     public void FillFlightsForm(ChangeEventArgs e)
     {
@@ -238,17 +249,15 @@
         selectedDay = flightField[4];
         selectedTime = flightField[5];
         selectedCost = flightField[7];
-
-        //Add reservation stuff here? 
     }
 
     List<Flight> foundFlights = new List<Flight>();
 
     private void FindFlights()
-    {
-        loadingMessage = "Select a flight from the list"; //Should take place of "Loading..." after button is pressed!
-
+    {   
         FlightManager flightManager = new FlightManager(); //Will populate flights list when called
+
+        loadingMessage = "Select a flight from the list"; //Should take place of "Loading..." after button is pressed!
                                                            //FlightManager.GetFlights();
         foundFlights.Clear(); //Clear list of found flights
 
@@ -277,37 +286,81 @@
         }
     }
 
-    private void clearFlights()
-    {
-        foundFlights.Clear();
-    }
+    //private void clearFlights()
+    //{
+    //    foundFlights.Clear();
+    //}
 
     string reservationCode;
     string name;
     string citizenship;
+    string status;
     //string flightCode = selectedFlightCode
 
-    public static List<Reservations> listOfReservations = new List<Reservations>(); //Making reservation
+    //public static List<Reservations> listOfReservations = new List<Reservations>(); //Making reservation
+
+    //ReservationManager reservationManager = new ReservationManager();
 
 
-    public void FillReservationCode() //Throw exception here
+
+    public void Reserve() //Throw exception here //Creates list for the find reservations method too?
     {
+        List<Reservation> listOfReservationsB = ReservationManager.GetReservations();
+
         Random rand = new Random();
         char reservationCodeLetter = (char)rand.Next('A', 'Z' + 1); //generates a random uppercase letter
         int reservationCodeNumber = rand.Next(1000, 10000);
         reservationCode = $"{reservationCodeLetter}{reservationCodeNumber}";
 
+        //string reservationCode = reservationCode;
+        string flightCode = selectedFlightCode;
+        string airline = selectedAirline;
+        string cost = selectedCost;
+        string name = selectedName;
+        string citizenship = selectedCitizenship;
+        string status = "Active";
 
+        Reservation reservations = new Reservation(reservationCode, flightCode, airline, cost, name, citizenship, status);
+        listOfReservationsB.Add(reservations);
+
+
+
+        //Reservation reservation = new Reservation(reservationCode, flightCode, airline, cost, name, citizenship, status);
+        //listOfReservations.Add(reservation);
 
         //assign the reservation code to a name and citizenship??? HowTo???
-       
+
 
         //ToDo
         //Create a list of reservations (above), add to the list all the information added here,
+    }
 
-        //listOfReservations.Add(reservationCode, flightCode, airline, cost, name, citizenship, status);
+    //public void MakeReservation() //Throw exception here
+    //{
+    //    //try
+    //    Random rand = new Random();
+    //    char reservationCodeLetter = (char)rand.Next('A', 'Z' + 1); //generates a random uppercase letter
+    //    int reservationCodeNumber = rand.Next(1000, 10000);
+
+    //    string randomReservationCode = $"{reservationCodeLetter}{reservationCodeNumber}";
+
+    //    string reservationCode = randomReservationCode;
+    //    string flightCode = selectedFlightCode;
+    //    string airline = selectedAirline;
+    //    string cost = selectedCost;
+    //    string name = selectedName;
+    //    string citizenship = selectedCitizenship;
+    //    string status = "Active";
+
+    //    Reservation reservation = new Reservation(reservationCode, flightCode, airline, cost, name, citizenship, status);
+    //    listOfReservations.Add(reservation);
 
 
+        //assign the reservation code to a name and citizenship??? HowTo???
+
+
+        //ToDo
+        //Create a list of reservations (above), add to the list all the information added here,
     }
 
 
